@@ -9,9 +9,15 @@ export class BaseTextInput extends React.Component {
   // Base component for all Input elements of type `text`.
   // In order to style this, write a wrapper component that has this as a child
   // and passes in all necessary props.
+  //
+  // @prop onChange: You may use this to keep track of this components current
+  //   value in your project's wrapper component. This is useful if you want
+  //   to build a custom component and set this component's type to `hidden`.
+  //
 
   static propTypes = {
     name: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func,
     placeholder: React.PropTypes.string,
     type: React.PropTypes.string.isRequired,
     valueInitial: React.PropTypes.any,
@@ -38,6 +44,7 @@ export class BaseTextInput extends React.Component {
     let { formContext } = this.context
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", this.props.name, this.state.value, false)
+      if (this.props.onChange) { this.props.onChange(this.state.value) }
     }
   }
 
@@ -53,13 +60,16 @@ export class BaseTextInput extends React.Component {
     //
     // We can do that by simply changing the `valueInitial` that we are passing
     // into this component as a prop. This component will inform the parent
-    // <Form> about the change, but without emitting the form's `onChange`.
+    // <Form> about the change, but without emitting the form's `onChange` (
+    // thanks to the `false` parameter in `handleChange)`).
+    //
     if (this.props.valueInitial !== nextProps.valueInitial) {
       let value = this.getValue(nextProps, nextProps.valueInitial)
       this.setState({value: value})
       let { formContext } = this.context
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", nextProps.name, value, false)
+        if (nextProps.onChange) { nextProps.onChange(value) }
       }
     }
   }
@@ -86,13 +96,14 @@ export class BaseTextInput extends React.Component {
     // If the user typed into the input field, we will save the new value
     // into this.state and inform the parent <Form> about the new value.
     let value = e.target.value
-    let { name, type } = this.props
+    let { name, onChange } = this.props
     let { formContext } = this.context
     value = this.getValue(this.props, value)
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", name, value, true)
     }
     this.setState({value: value})
+    if (onChange) { onChange(value) }
   }
 
   render() {
