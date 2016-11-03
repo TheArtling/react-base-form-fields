@@ -25,6 +25,9 @@
     "radium": "0.18.1",
     "react-get-form-data": "git@github.com:TheArtling/react-get-form-data.git"
   },
+  "dependencies": {
+    "react-get-form-data": "git@github.com:TheArtling/react-get-form-data.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.3.17",
     "babel-core": "^6.3.26",
