@@ -1,3 +1,4 @@
 import { BaseTextInput } from "./BaseTextInput"
+import { BaseMultiSelectInput } from "./BaseMultiSelectInput"
 
-export { BaseTextInput }
+export { BaseMultiSelectInput, BaseTextInput }

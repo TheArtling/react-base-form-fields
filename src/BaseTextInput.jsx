@@ -1,9 +1,11 @@
 import React from "react"
+import Radium from "radium"
 import { Formfield } from "react-get-form-data"
 
 
 @Formfield
-export default class BaseTextInput extends React.Component {
+@Radium
+export class BaseTextInput extends React.Component {
   // Base component for all Input elements of type `text`.
   // In order to style this, write a wrapper component that has this as a child
   // and passes in all necessary props.
@@ -98,13 +100,13 @@ export default class BaseTextInput extends React.Component {
     // form.getValues() you will get whatever internal value we computed in
     // `this.getValue()`, so the `<input value="blabla" />` in your DOM
     // might not be what you will actually POST to your API.
-    let { type, ...other } = this.props
+    let { style, type, ...other } = this.props
     let valueDisplay = this.getDisplayValue()
     return (
       <input
         className="form-control"
         onChange={(val) => this.handleChange(val)}
-        style={this.props.style}
+        style={style}
         type={type}
         value={valueDisplay}
         {...other}
