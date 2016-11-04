@@ -1,6 +1,6 @@
 {
   "name": "react-base-form-fields",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Set of base form field components that work well with react-get-form-data.",
   "main": "./lib/index.js",
   "scripts": {
