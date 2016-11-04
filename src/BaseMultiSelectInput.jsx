@@ -10,6 +10,11 @@ export class BaseMultiSelectInput extends React.Component {
   // In order to style this, write a wrapper component that has this as a child
   // and passes in all necessary props.
   //
+  // @prop options: Should be an array of objects. Each object should be of
+  //   the form `{value: "1", label: "Foo"}`. The first item in the list should
+  //   be the empty value, i.e. `{value: "", label: "All"}`. When the user
+  //   selects this item, all other items will be de-selected.
+  //
   // @prop renderDisplay(value): This function should return the component
   //   that is rendered when the DDL is not selected.
   //
@@ -58,6 +63,15 @@ export class BaseMultiSelectInput extends React.Component {
     return value
   }
 
+  setChangedValue(value) {
+    let { name } = this.props
+    let { formContext } = this.context
+    if (formContext && formContext.handleChange) {
+      formContext.handleChange("", name, value, true)
+    }
+    this.setState({value: value})
+  }
+
   handleChange(e) {
     // See BaseTextInput for explanation.
     //
@@ -67,8 +81,14 @@ export class BaseMultiSelectInput extends React.Component {
     // internal state or not. If it exists, we remove it, if it doesn't exist,
     // we add it.
     //
+    let { options } = this.props
     let { value } = this.state
     let newValue = e.target.value
+
+    if (newValue === options[0].value) {
+      return this.setChangedValue([])
+    }
+
     let newValueList = value
     let found = false
     value.forEach((item, index) => {
@@ -78,13 +98,7 @@ export class BaseMultiSelectInput extends React.Component {
       }
     })
     if (!found) { newValueList.push(newValue) }
-
-    let { name } = this.props
-    let { formContext } = this.context
-    if (formContext && formContext.handleChange) {
-      formContext.handleChange("", name, newValueList, true)
-    }
-    this.setState({value: newValueList})
+    this.setChangedValue(newValueList)
   }
 
   getDisplayValue() {
@@ -129,6 +143,15 @@ export class BaseMultiSelectInput extends React.Component {
       value.forEach((valueItem) => {
         if (valueItem === option.value) { selected = true }
       })
+
+      if (value instanceof Array
+          && value.length === 0
+          && option.value === "") {
+        // if no item is selected, then the first option (the empty item)
+        // should be treated as selected
+        selected = true
+      }
+
       let item = renderItem(
         name,
         index,
