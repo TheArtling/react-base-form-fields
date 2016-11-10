@@ -25,23 +25,25 @@ export class BaseFileInput extends React.Component {
     maxSize: React.PropTypes.number.isRequired,
     name: React.PropTypes.string.isRequired,
     onFileTooBig: React.PropTypes.func.isRequired,
+    onChange: React.PropTypes.func,
   }
 
   handleChange(val) {
-    let { dispatch, maxSize, name, onFileTooBig } = this.props
+    let { dispatch, maxSize, name, onChange, onFileTooBig } = this.props
     let { formContext } = this.context
     let self = this;
     let reader = new FileReader();
     let file = val.target.files[0];
     reader.onload = function(upload) {
+      let value = upload.target.result
       if (formContext && formContext.handleChange) {
-        formContext.handleChange("", name, upload.target.result, true)
+        formContext.handleChange("", name, value, true)
       }
+      if (onChange) { onChange(value) }
     }
     if (file.size <= maxSize) {
       reader.readAsDataURL(file);
-    }
-    else {
+    } else {
       onFileTooBig()
     }
   }

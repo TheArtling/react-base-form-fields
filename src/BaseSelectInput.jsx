@@ -36,6 +36,7 @@ export class BaseSelectInput extends React.Component {
 
   static propTypes = {
     name: React.PropTypes.string.isRequired,
+    choices: React.PropTypes.array.isRequired,
     onChange: React.PropTypes.func,
     placeholder: React.PropTypes.string,
     valueInitial: React.PropTypes.any,
