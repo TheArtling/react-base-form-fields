@@ -1,6 +1,5 @@
 import React from "react";
 import { BaseTextInput } from "../src/BaseTextInput";
-import { Form } from "react-get-form-data"
 import { shallow } from 'enzyme';
 
 
