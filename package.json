@@ -5,7 +5,8 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
-    "clean": "rm -rf lib"
+    "clean": "rm -rf lib",
+    "test": "node packages/react-scripts/scripts/test.js --env=jsdom"
   },
   "repository": {
     "type": "git",
@@ -21,11 +22,16 @@
   "author": [
     "Martin Brochhaus <mbrochh@gmail.com>"
   ],
+  "dependencies": {
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0"
+  },
   "peerDependencies": {
     "radium": "0.18.1",
     "react-get-form-data": "git@github.com:TheArtling/react-get-form-data.git"
   },
   "devDependencies": {
+    "babel-jest": "17.0.2",
     "babel-cli": "^6.3.17",
     "babel-core": "^6.3.26",
     "babel-eslint": "^6.1.2",
@@ -53,7 +59,15 @@
     "babel-register": "^6.3.13",
     "eslint": "^3.1.1",
     "eslint-plugin-react": "^5.1.1",
-    "react": "^0.14.0"
+    "jest": "17.0.3",
+    "react-test-renderer": "15.4.0",
+    "react-addons-test-utils": "15.4.0",
+    "enzyme": "2.6.0",
+    "radium": "0.18.1",
+    "react-get-form-data": "git@github.com:TheArtling/react-get-form-data.git"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "license": "MIT",
   "bugs": {

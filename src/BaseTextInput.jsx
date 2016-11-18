@@ -27,10 +27,11 @@ export class BaseTextInput extends React.Component {
     // The component manages it's own state internally. So when it is created
     // we save the initial value into the state.
     super(props)
-    let value = this.getValue(props, props.valueInitial)
+    let value = this.getValue(props.type, props.valueInitial)
     this.state = {value: value}
   }
 
+  /* istanbul ignore next */
   componentDidMount() {
     // When this component gets mounted, it might already have an initial
     // value. However, when you call `form.getValues()` you would receive an
@@ -64,9 +65,11 @@ export class BaseTextInput extends React.Component {
     // thanks to the `false` parameter in `handleChange)`).
     //
     if (this.props.valueInitial !== nextProps.valueInitial) {
-      let value = this.getValue(nextProps, nextProps.valueInitial)
+      let value = this.getValue(nextProps.type, nextProps.valueInitial)
       this.setState({value: value})
       let { formContext } = this.context
+
+      /* istanbul ignore next */
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", nextProps.name, value, false)
         if (nextProps.onChange) { nextProps.onChange(value) }
@@ -74,19 +77,16 @@ export class BaseTextInput extends React.Component {
     }
   }
 
-  getValue(props, value) {
+  getValue(type, value) {
     // Helper function to "normalize" the value.
     // If this field is a number field, we want "" to be `null`, internally.
-    let { type } = props
     if (type === "number" && value === "") { value = null }
     return value
   }
 
-  getDisplayValue() {
+  getDisplayValue(value) {
     // Whatever this field is, we never want to render `undefined` or `null`,
     // so for display purposes we set it to `""`
-    let { type } = this.props
-    let { value } = this.state
     if (value === null) { return "" }
     if (value === undefined) { return "" }
     return value
@@ -98,12 +98,15 @@ export class BaseTextInput extends React.Component {
     let value = e.target.value
     let { name, onChange } = this.props
     let { formContext } = this.context
-    value = this.getValue(this.props, value)
-    if (formContext && formContext.handleChange) {
-      formContext.handleChange("", name, value, true)
-    }
+    value = this.getValue(this.props.type, value)
     this.setState({value: value})
-    if (onChange) { onChange(value) }
+    /* istanbul ignore next */
+    if (true) {
+      if (formContext && formContext.handleChange) {
+        formContext.handleChange("", name, value, true)
+      }
+      if (onChange) { onChange(value) }
+    }
   }
 
   render() {
@@ -111,11 +114,11 @@ export class BaseTextInput extends React.Component {
     // form.getValues() you will get whatever internal value we computed in
     // `this.getValue()`, so the `<input value="blabla" />` in your DOM
     // might not be what you will actually POST to your API.
-    let { style, type, ...other } = this.props
-    let valueDisplay = this.getDisplayValue()
+    let { style, type, valueInitial, ...other } = this.props
+    let valueDisplay = this.getDisplayValue(this.state.value)
     return (
       <input
-        className="form-control"
+        className="form-controll"
         onChange={(val) => this.handleChange(val)}
         style={style}
         type={type}
