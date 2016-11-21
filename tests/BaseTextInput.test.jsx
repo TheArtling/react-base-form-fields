@@ -1,6 +1,6 @@
 import React from "react";
 import { BaseTextInput } from "../src/BaseTextInput";
-import { shallow } from 'enzyme';
+import { shallow } from "enzyme";
 
 
 describe('BaseTextInput.componentWillReceiveProps', () => {
