@@ -118,7 +118,7 @@ export class BaseTextInput extends React.Component {
     let valueDisplay = this.getDisplayValue(this.state.value)
     return (
       <input
-        className="form-controll"
+        className="form-control"
         onChange={(val) => this.handleChange(val)}
         style={style}
         type={type}
