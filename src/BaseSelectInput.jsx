@@ -86,7 +86,7 @@ export class BaseSelectInput extends React.Component {
   }
 
   render() {
-    let { choices, onChange, ...other } = this.props
+    let { choices, onChange, valueInitial, ...other } = this.props
     let valueDisplay = this.getDisplayValue()
     return (
       <select
