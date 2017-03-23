@@ -4,7 +4,7 @@ import { BaseMultiSelectInput } from "./BaseMultiSelectInput"
 import { BaseSelectInput } from "./BaseSelectInput"
 import { BaseTextArea } from "./BaseTextArea"
 import { BaseTextInput } from "./BaseTextInput"
-import { BaseMultiTextInput } from "./BaseMultiTextInput"
+import { BaseMultiTextInput } from "./MultiTextInput/BaseMultiTextInput"
 
 
 export {
