@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export class BaseMultiTextInput extends React.Component {
+export default class BaseMultiTextInput extends React.Component {
   static propTypes = {
     ...MultiText.propTypes,
     inputStyle: React.PropTypes.object,
