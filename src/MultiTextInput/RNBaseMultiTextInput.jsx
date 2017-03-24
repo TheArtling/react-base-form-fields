@@ -33,7 +33,9 @@ export class BaseMultiTextInput extends React.Component {
   }
 
   static defaultProps = {
-    addKeys: [13, 188] 
+    addKeys: [13, 188],
+    containerStyle: {},
+    inputStyle: {}
   }
 
   constructor(props) {
@@ -94,7 +96,7 @@ export class BaseMultiTextInput extends React.Component {
       <TouchableWithoutFeedback
         onPress={() => this.handleClick()}
       >
-        <View style={[styles.base, containerStyle && containerStyle]}>
+        <View style={{...styles.base, ...containerStyle}}>
           <MultiText 
             renderTag={(value) => this.renderTag(value)}
             onChange={(value) => this.handleChange(value)}
@@ -108,10 +110,7 @@ export class BaseMultiTextInput extends React.Component {
             ref={(item) => { this.input = item}}
             onChange={(evt) => this.handleTextChange(evt)}
             onKeyPress={(evt) => this.handleKey(evt)}
-            style={[
-              styles.input,
-              inputStyle && inputStyle
-            ]}
+            style={{...styles.input, ...inputStyle}}
             underlineColorAndroid="transparent"
             value={input}
           />     
