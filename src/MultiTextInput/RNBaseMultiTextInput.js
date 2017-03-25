@@ -12,16 +12,17 @@ import { MultiText } from "./MultiText"
 
 const styles = StyleSheet.create({
   base: {
-    width: "100%",
-    padding: "10px",
-    border: `1px solid grey`,
-    borderRadius: "3px",
+    padding: 10,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "grey",
+    borderRadius: 3,
     flexDirection: "row",
+    alignItems: "center",
     flexWrap: "wrap"
   },
   input: {
-    flex: "1 0 25px",
-    minWidth: "15px"
+    minWidth: 15
   }
 })
 
@@ -33,9 +34,7 @@ export default class BaseMultiTextInput extends React.Component {
   }
 
   static defaultProps = {
-    addKeys: [13, 188],
-    containerStyle: {},
-    inputStyle: {}
+    addKeys: [',', 'Enter'],
   }
 
   constructor(props) {
@@ -49,18 +48,21 @@ export default class BaseMultiTextInput extends React.Component {
   }
 
   handleTextChange(evt) {
-    this.setState({input: evt.nativeEvent.text})
-  }
-
-  handleKey(evt) {
-    if (evt.nativeEvent.key == 8) {
+    let lastEnteredKey = evt.nativeEvent.text.slice(-1)
+    console.log(evt.nativeEvent)
+    if (lastEnteredKey == 8) {
       if (this.state.input === "")
         this.handleRemove(-1)
+    } else if (this.props.addKeys.indexOf(lastEnteredKey) > -1){
+      this.setState({action: "add"})
     } else {
-      if (this.props.addKeys.indexOf(evt.nativeEvent.key) > -1) {
-        this.setState({action: "add"})
-        evt.preventDefault()
-      }
+      this.setState({input: evt.nativeEvent.text})
+    }
+  }
+
+  handleSubmit(evt) {
+    if (this.state.input !== "") {
+      this.setState({action: "add"})
     }
   }
 
@@ -96,12 +98,12 @@ export default class BaseMultiTextInput extends React.Component {
       <TouchableWithoutFeedback
         onPress={() => this.handleClick()}
       >
-        <View style={{...styles.base, ...containerStyle}}>
+        <View style={[styles.base, containerStyle]}>
           <MultiText 
-            renderTag={(value) => this.renderTag(value)}
+            renderTag={(value,index) => this.renderTag(value,index)}
             onChange={(value) => this.handleChange(value)}
             resetInput={this.resetInput}
-            WrapperComp={"View"}
+            WrapperComp={View}
             input={input}
             action={action}
             {...others}
@@ -109,8 +111,8 @@ export default class BaseMultiTextInput extends React.Component {
           <TextInput
             ref={(item) => { this.input = item}}
             onChange={(evt) => this.handleTextChange(evt)}
-            onKeyPress={(evt) => this.handleKey(evt)}
-            style={{...styles.input, ...inputStyle}}
+            onSubmitEditing={(evt) => this.handleSubmit(evt)}
+            style={[styles.input, inputStyle]}
             underlineColorAndroid="transparent"
             value={input}
           />     

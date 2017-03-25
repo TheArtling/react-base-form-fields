@@ -105,9 +105,9 @@ export class MultiText extends React.Component {
   render() {
     let { WrapperComp } = this.props
     let { tags } = this.state
-    let renderedTags = tags.map((tag, index) => this.renderTag(tag, index))
-    if (renderedTags.length > 0)
-      return <WrapperComp>{renderedTags}</WrapperComp>
-    return null
+    let renderedTags = []
+    if (tags.length > 0)
+      renderedTags = tags.map((tag, index) => this.renderTag(tag, index))
+    return React.createElement(WrapperComp,{},renderedTags)
   }
 }
