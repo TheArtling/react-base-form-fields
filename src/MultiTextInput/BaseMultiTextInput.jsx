@@ -90,7 +90,7 @@ export class BaseMultiTextInput extends React.Component {
         onClick={() => this.handleClick()}
       >
         <MultiText 
-          renderTag={(value) => this.renderTag(value)}
+          renderTag={(value,index) => this.renderTag(value,index)}
           onChange={(value) => this.handleChange(value)}
           resetInput={this.resetInput}
           WrapperComp={"div"}
