@@ -12,17 +12,8 @@ import { MultiText } from "./MultiText"
 
 const styles = StyleSheet.create({
   base: {
-    padding: 10,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "grey",
-    borderRadius: 3,
-    flexDirection: "row",
-    alignItems: "center",
-    flexWrap: "wrap"
-  },
-  input: {
-    minWidth: 15
+    padding: 5,
+    flexDirection: "column",
   }
 })
 
@@ -34,7 +25,9 @@ export default class BaseMultiTextInput extends React.Component {
   }
 
   static defaultProps = {
-    addKeys: [',', 'Enter'],
+    addKeys: [",", "Enter"],
+    inputStyle: {},
+    containerStyle: {}
   }
 
   constructor(props) {
@@ -49,7 +42,6 @@ export default class BaseMultiTextInput extends React.Component {
 
   handleTextChange(evt) {
     let lastEnteredKey = evt.nativeEvent.text.slice(-1)
-    console.log(evt.nativeEvent)
     if (lastEnteredKey == 8) {
       if (this.state.input === "")
         this.handleRemove(-1)
@@ -104,18 +96,25 @@ export default class BaseMultiTextInput extends React.Component {
             onChange={(value) => this.handleChange(value)}
             resetInput={this.resetInput}
             WrapperComp={View}
+            WrapperStyle={
+              {
+                flexDirection: "row", 
+                flexWrap: "wrap", 
+                alignItems: "center",
+              }
+            }
             input={input}
             action={action}
             {...others}
-          />
+          />  
           <TextInput
             ref={(item) => { this.input = item}}
             onChange={(evt) => this.handleTextChange(evt)}
             onSubmitEditing={(evt) => this.handleSubmit(evt)}
-            style={[styles.input, inputStyle]}
+            style={inputStyle}
             underlineColorAndroid="transparent"
-            value={input}
-          />     
+            value={String(input)}
+          />  
         </View>
       </TouchableWithoutFeedback>
     )

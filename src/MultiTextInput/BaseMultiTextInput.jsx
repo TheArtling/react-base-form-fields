@@ -8,15 +8,8 @@ const styles = {
   base: {
     width: "100%",
     padding: ".1em",
-    border: `1px solid grey`,
-    borderRadius: "3px",
     display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap"
-  },
-  input: {
-    flex: "1 0 25px",
-    minWidth: "15px"
+    flexDirection: "column",
   }
 }
 
@@ -30,7 +23,9 @@ export class BaseMultiTextInput extends React.Component {
   }
 
   static defaultProps = {
-    addKeys: [13, 188] 
+    addKeys: [13, 188],
+    inputStyle: {},
+    containerStyle: {}
   }
 
   constructor(props) {
@@ -86,7 +81,7 @@ export class BaseMultiTextInput extends React.Component {
     let { input, action } = this.state
     return (
       <div 
-        style={[styles.base, containerStyle && containerStyle]} 
+        style={[styles.base, containerStyle]} 
         onClick={() => this.handleClick()}
       >
         <MultiText 
@@ -94,6 +89,13 @@ export class BaseMultiTextInput extends React.Component {
           onChange={(value) => this.handleChange(value)}
           resetInput={this.resetInput}
           WrapperComp={"div"}
+          WrapperStyle={
+            {
+              flexDirection: "row", 
+              flexWrap: "wrap", 
+              alignItems: "center",
+            }
+          }
           input={input}
           action={action}
           {...others}
@@ -102,11 +104,8 @@ export class BaseMultiTextInput extends React.Component {
           ref={(item) => { this.input = item}}
           onChange={(evt) => this.handleTextChange(evt)}
           onKeyDown={(evt) => this.handleKey(evt)}
-          style={[
-            styles.input,
-            inputStyle && inputStyle
-          ]}
-          value={input}
+          style={inputStyle}
+          value={String(input)}
         />     
       </div>
     )

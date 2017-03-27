@@ -14,11 +14,12 @@ export class MultiText extends React.Component {
       [React.PropTypes.string, React.PropTypes.number]
     ),
     action: React.PropTypes.oneOf(["add", "remove", "none"]),
-    addKeys: React.PropTypes.array,
+    addKeys: React.PropTypes.array
   }
 
   static defaultProps = { 
-    unique: true
+    unique: true,
+    WrapperStyle: {}
   }
 
   constructor(props) {
@@ -103,11 +104,12 @@ export class MultiText extends React.Component {
   }
 
   render() {
-    let { WrapperComp } = this.props
+    let { WrapperComp, WrapperStyle, inputComp } = this.props
     let { tags } = this.state
     let renderedTags = []
     if (tags.length > 0)
       renderedTags = tags.map((tag, index) => this.renderTag(tag, index))
-    return React.createElement(WrapperComp,{},renderedTags)
+    return React.createElement(
+      WrapperComp, { style: WrapperStyle }, renderedTags)
   }
 }
