@@ -55,7 +55,8 @@ export class BaseMultiTextInput extends React.Component {
   }
 
   handleClick() {
-    this.setState({ focusInput: true })
+    if (this.input)
+      this.input.focus()
   }
 
   handleRemove(index) {
@@ -69,9 +70,14 @@ export class BaseMultiTextInput extends React.Component {
   }
 
   renderTag(value, index) {
+    let tag
+    if (this.props.renderTag)
+      tag = this.props.renderTag(value, index)
+    else 
+      tag = <Tag>{value}</Tag>
     return (
       <a key={value} onClick={() => this.handleRemove(index)}>
-        <Tag>{value}</Tag>
+        {tag}
       </a>
     )
   }

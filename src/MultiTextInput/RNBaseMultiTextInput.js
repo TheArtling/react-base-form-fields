@@ -59,7 +59,8 @@ export default class BaseMultiTextInput extends React.Component {
   }
 
   handleClick() {
-    this.setState({ focusInput: true })
+    if (this.input)
+      this.input.focus()
   }
 
   handleRemove(index) {
@@ -73,12 +74,17 @@ export default class BaseMultiTextInput extends React.Component {
   }
 
   renderTag(value, index) {
+    let tag
+    if (this.props.renderTag)
+      tag = this.props.renderTag(value, index)
+    else 
+      tag = <Tag>{value}</Tag>
     return (
       <TouchableOpacity 
         key={value} 
         onPress={() => this.handleRemove(index)}
       >
-        <Tag>{value}</Tag>
+        {tag}
       </TouchableOpacity>
     )
   }
