@@ -24,13 +24,15 @@ export class MultiText extends React.Component {
 
   constructor(props) {
     super(props)
-    let value = props.valueInitial ? props.valueInitial : []
     this.state = {
-      tags: value,
+      tags: props.valueInitial || [],
       propagateChange: false,
       hasUpdated: false,
     }
-    this.handleChange(props, value, false)
+  }
+
+  componentDidMount() {
+    this.handleChange(this.props, this.state.tags, false)
   }
 
   componentWillReceiveProps(nextProps) {
