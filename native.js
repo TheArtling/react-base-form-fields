@@ -1,5 +1,5 @@
-import BaseTextInput from "./src/RNBaseTextInput.jsx"
-import BaseMultiTextInput from "./src/MultiTextInput/RNBaseMultiTextInput.jsx"
+import BaseTextInput from "./src/RNBaseTextInput.js"
+import BaseMultiTextInput from "./src/MultiTextInput/RNBaseMultiTextInput.js"
 
 
 export {
