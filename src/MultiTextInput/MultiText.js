@@ -82,7 +82,7 @@ export class MultiText extends React.Component {
     if (tagLength.length === 0) return
 
     let indexToRemove = removalIndex
-    if (Math.sign(removalIndex) === -1) 
+    if (removalIndex < 0) 
       indexToRemove += tagLength
     let newTags = this.state.tags.filter(
       (tag, index) => index !== indexToRemove
