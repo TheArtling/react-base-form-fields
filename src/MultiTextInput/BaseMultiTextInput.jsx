@@ -76,9 +76,9 @@ export class BaseMultiTextInput extends React.Component {
     else 
       tag = <Tag>{value}</Tag>
     return (
-      <a key={value} onClick={() => this.handleRemove(index)}>
+      <span key={value} onClick={() => this.handleRemove(index)}>
         {tag}
-      </a>
+      </span>
     )
   }
 
