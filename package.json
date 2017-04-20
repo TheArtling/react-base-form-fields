@@ -22,13 +22,9 @@
   "author": [
     "Martin Brochhaus <mbrochh@gmail.com>"
   ],
-  "dependencies": {
-    "react": "^15.4.0",
-    "react-dom": "^15.4.0"
-  },
   "peerDependencies": {
-    "radium": "0.18.1",
-    "react-get-form-data": "git@github.com:TheArtling/react-get-form-data.git"
+    "react": "^0.14.0 || ^15.0.0-0",
+    "radium": "^0.18.1"
   },
   "devDependencies": {
     "babel-jest": "17.0.2",

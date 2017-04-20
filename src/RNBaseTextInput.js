@@ -1,10 +1,10 @@
 import React from "react"
 import { Formfield } from "react-get-form-data"
-import { TextInput } from 'react-native'
+import { TextInput } from "react-native"
 
 
 @Formfield
-export class RNBaseTextInput extends React.Component {
+export default class BaseTextInput extends React.Component {
   // Base component for all Input elements of type `text`.
   // In order to style this, write a wrapper component that has this as a child
   // and passes in all necessary props.
