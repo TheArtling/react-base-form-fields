@@ -60,7 +60,7 @@
     "react-addons-test-utils": "15.4.0",
     "enzyme": "2.6.0",
     "radium": "0.18.1",
-    "react-get-form-data": "git@github.com:TheArtling/react-get-form-data.git"
+    "react-get-form-data": "git+https://github.com:TheArtling/react-get-form-data.git"
   },
   "jest": {
     "testEnvironment": "node"
