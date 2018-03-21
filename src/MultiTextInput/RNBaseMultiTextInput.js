@@ -1,7 +1,8 @@
 import React from "react"
-import { 
-  View, 
-  TouchableOpacity, 
+import PropTypes from "prop-types"
+import {
+  View,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   StyleSheet,
   TextInput,
@@ -14,20 +15,20 @@ const styles = StyleSheet.create({
   base: {
     padding: 5,
     flexDirection: "column",
-  }
+  },
 })
 
 export default class BaseMultiTextInput extends React.Component {
   static propTypes = {
     ...MultiText.propTypes,
-    inputStyle: React.PropTypes.object,
-    containerStyle: React.PropTypes.object,
+    inputStyle: PropTypes.object,
+    containerStyle: PropTypes.object,
   }
 
   static defaultProps = {
     addKeys: [",", "Enter"],
     inputStyle: {},
-    containerStyle: {}
+    containerStyle: {},
   }
 
   constructor(props) {
@@ -37,53 +38,45 @@ export default class BaseMultiTextInput extends React.Component {
   }
 
   resetValues() {
-    this.setState({input: "", action: "none"})
+    this.setState({ input: "", action: "none" })
   }
 
   handleTextChange(evt) {
     let lastEnteredKey = evt.nativeEvent.text.slice(-1)
     if (lastEnteredKey == 8) {
-      if (this.state.input === "")
-        this.handleRemove(-1)
-    } else if (this.props.addKeys.indexOf(lastEnteredKey) > -1){
-      this.setState({action: "add"})
+      if (this.state.input === "") this.handleRemove(-1)
+    } else if (this.props.addKeys.indexOf(lastEnteredKey) > -1) {
+      this.setState({ action: "add" })
     } else {
-      this.setState({input: evt.nativeEvent.text})
+      this.setState({ input: evt.nativeEvent.text })
     }
   }
 
   handleSubmit(evt) {
     if (this.state.input !== "") {
-      this.setState({action: "add"})
+      this.setState({ action: "add" })
     }
   }
 
   handleClick() {
-    if (this.input)
-      this.input.focus()
+    if (this.input) this.input.focus()
   }
 
   handleRemove(index) {
-    this.setState({action: "remove", input: index })
+    this.setState({ action: "remove", input: index })
   }
 
   handleChange(value) {
-    if (this.props.onChange)
-      this.props.onChange(value)
+    if (this.props.onChange) this.props.onChange(value)
     this.resetValues()
   }
 
   renderTag(value, index) {
     let tag
-    if (this.props.renderTag)
-      tag = this.props.renderTag(value, index)
-    else 
-      tag = <Tag>{value}</Tag>
+    if (this.props.renderTag) tag = this.props.renderTag(value, index)
+    else tag = <Tag>{value}</Tag>
     return (
-      <TouchableOpacity 
-        key={value} 
-        onPress={() => this.handleRemove(index)}
-      >
+      <TouchableOpacity key={value} onPress={() => this.handleRemove(index)}>
         {tag}
       </TouchableOpacity>
     )
@@ -93,34 +86,32 @@ export default class BaseMultiTextInput extends React.Component {
     let { inputStyle, containerStyle, onChange, ...others } = this.props
     let { input, action } = this.state
     return (
-      <TouchableWithoutFeedback
-        onPress={() => this.handleClick()}
-      >
+      <TouchableWithoutFeedback onPress={() => this.handleClick()}>
         <View style={[styles.base, containerStyle]}>
-          <MultiText 
-            renderTag={(value,index) => this.renderTag(value,index)}
-            onChange={(value) => this.handleChange(value)}
+          <MultiText
+            renderTag={(value, index) => this.renderTag(value, index)}
+            onChange={value => this.handleChange(value)}
             resetInput={this.resetInput}
             WrapperComp={View}
-            WrapperStyle={
-              {
-                flexDirection: "row", 
-                flexWrap: "wrap", 
-                alignItems: "center",
-              }
-            }
+            WrapperStyle={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignItems: "center",
+            }}
             input={input}
             action={action}
             {...others}
-          />  
+          />
           <TextInput
-            ref={(item) => { this.input = item}}
-            onChange={(evt) => this.handleTextChange(evt)}
-            onSubmitEditing={(evt) => this.handleSubmit(evt)}
+            ref={item => {
+              this.input = item
+            }}
+            onChange={evt => this.handleTextChange(evt)}
+            onSubmitEditing={evt => this.handleSubmit(evt)}
             style={inputStyle}
             underlineColorAndroid="transparent"
             value={String(input)}
-          />  
+          />
         </View>
       </TouchableWithoutFeedback>
     )

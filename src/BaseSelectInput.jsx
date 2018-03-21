@@ -1,7 +1,7 @@
 import React from "react"
+import PropTypes from "prop-types"
 import Radium from "radium"
 import { Formfield } from "react-get-form-data"
-
 
 const styles = {
   invisible: {
@@ -14,9 +14,8 @@ const styles = {
     top: 0,
     right: 0,
     WebkitAppearance: "none",
-  }
+  },
 }
-
 
 @Formfield
 @Radium
@@ -35,18 +34,18 @@ export class BaseSelectInput extends React.Component {
   //
 
   static propTypes = {
-    name: React.PropTypes.string.isRequired,
-    choices: React.PropTypes.array.isRequired,
-    onChange: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
-    valueInitial: React.PropTypes.any,
+    name: PropTypes.string.isRequired,
+    choices: PropTypes.array.isRequired,
+    onChange: PropTypes.func,
+    placeholder: PropTypes.string,
+    valueInitial: PropTypes.any,
   }
 
   constructor(props) {
     // See BaseTextInput for explanation.
     super(props)
     let value = props.valueInitial
-    this.state = {value: value}
+    this.state = { value: value }
   }
 
   componentDidMount() {
@@ -54,7 +53,9 @@ export class BaseSelectInput extends React.Component {
     let { formContext } = this.context
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", this.props.name, this.state.value, false)
-      if (this.props.onChange) { this.props.onChange(this.state.value) }
+      if (this.props.onChange) {
+        this.props.onChange(this.state.value)
+      }
     }
   }
 
@@ -62,16 +63,20 @@ export class BaseSelectInput extends React.Component {
     // See BaseTextInput for explanation.
     if (this.props.valueInitial !== nextProps.valueInitial) {
       let value = nextProps.valueInitial
-      this.setState({value: value})
+      this.setState({ value: value })
       let { formContext } = this.context
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", nextProps.name, value, false)
-        if (nextProps.onChange) { nextProps.onChange(value) }
+        if (nextProps.onChange) {
+          nextProps.onChange(value)
+        }
       }
     }
   }
 
-  getDisplayValue() { return this.state.value }
+  getDisplayValue() {
+    return this.state.value
+  }
 
   handleChange(e) {
     // See BaseTextInput for explanation.
@@ -81,8 +86,10 @@ export class BaseSelectInput extends React.Component {
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", name, value, true)
     }
-    this.setState({value: value})
-    if (onChange) { onChange(value) }
+    this.setState({ value: value })
+    if (onChange) {
+      onChange(value)
+    }
   }
 
   render() {
@@ -91,16 +98,13 @@ export class BaseSelectInput extends React.Component {
     return (
       <select
         style={[styles.invisible]}
-        onChange={(val) => this.handleChange(val)}
+        onChange={val => this.handleChange(val)}
         value={valueDisplay}
         {...other}
       >
-        {choices.map (function (choice) {
+        {choices.map(function(choice) {
           return (
-            <option
-              key={choice.value}
-              value={choice.value}
-            >
+            <option key={choice.value} value={choice.value}>
               {choice.label}
             </option>
           )

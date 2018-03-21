@@ -1,7 +1,7 @@
 import React from "react"
+import PropTypes from "prop-types"
 import Radium from "radium"
 import { Formfield } from "react-get-form-data"
-
 
 @Formfield
 @Radium
@@ -27,26 +27,26 @@ export class BaseMultiSelectInput extends React.Component {
   //   emit an `onClose` event that can be handled by this base component.
 
   static propTypes = {
-    modal: React.PropTypes.any.isRequired,
-    name: React.PropTypes.string.isRequired,
-    options: React.PropTypes.array.isRequired,
-    renderDisplay: React.PropTypes.func.isRequired,
-    renderItem: React.PropTypes.func.isRequired,
-    valueInitial: React.PropTypes.any,
+    modal: PropTypes.any.isRequired,
+    name: PropTypes.string.isRequired,
+    options: PropTypes.array.isRequired,
+    renderDisplay: PropTypes.func.isRequired,
+    renderItem: PropTypes.func.isRequired,
+    valueInitial: PropTypes.any,
   }
 
   constructor(props) {
     // See BaseTextInput for explanation.
     super(props)
     let value = this.getValue(props.valueInitial)
-    this.state = {value: value, isActive: false}
+    this.state = { value: value, isActive: false }
   }
 
   componentWillReceiveProps(nextProps) {
     // See BaseTextInput for explanation.
     if (this.props.valueInitial !== nextProps.valueInitial) {
       let value = this.getValue(nextProps.valueInitial)
-      this.setState({value: value})
+      this.setState({ value: value })
       let { formContext } = this.context
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", nextProps.name, value, false)
@@ -58,8 +58,12 @@ export class BaseMultiSelectInput extends React.Component {
     // Helper function to "normalize" the value.
     // If this field is empty, we turn it into an empty Array.
     // If this field is not an Array, we turn it into an Array with one element.
-    if (!value) { value = [] }
-    if (value instanceof Array === false) { value = [value] }
+    if (!value) {
+      value = []
+    }
+    if (value instanceof Array === false) {
+      value = [value]
+    }
     return value
   }
 
@@ -69,7 +73,7 @@ export class BaseMultiSelectInput extends React.Component {
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", name, value, true)
     }
-    this.setState({value: value})
+    this.setState({ value: value })
   }
 
   handleChange(e) {
@@ -97,7 +101,9 @@ export class BaseMultiSelectInput extends React.Component {
         newValueList.splice(index, 1)
       }
     })
-    if (!found) { newValueList.push(newValue) }
+    if (!found) {
+      newValueList.push(newValue)
+    }
     this.setChangedValue(newValueList)
   }
 
@@ -109,26 +115,30 @@ export class BaseMultiSelectInput extends React.Component {
     let { options } = this.props
     let { value } = this.state
     let displayValue = ""
-    value.forEach((value) => {
-      options.forEach((option) => {
+    value.forEach(value => {
+      options.forEach(option => {
         if (value === option.value) {
           displayValue += `${option.label}, `
         }
       })
     })
-    if (displayValue) { displayValue = displayValue.replace(/, $/, "") }
-    if (!displayValue) { return options[0].label }
+    if (displayValue) {
+      displayValue = displayValue.replace(/, $/, "")
+    }
+    if (!displayValue) {
+      return options[0].label
+    }
     return displayValue
   }
 
   handleClick() {
     // Toggles active state of the modal when user clicks at the displayValue.
-    this.setState({isActive: !this.state.isActive})
+    this.setState({ isActive: !this.state.isActive })
   }
 
   handleClose() {
     // Closes the modal.
-    this.setState({isActive: false})
+    this.setState({ isActive: false })
   }
 
   renderItems() {
@@ -140,13 +150,13 @@ export class BaseMultiSelectInput extends React.Component {
     let { value } = this.state
     return options.map((option, index) => {
       let selected = false
-      value.forEach((valueItem) => {
-        if (valueItem === option.value) { selected = true }
+      value.forEach(valueItem => {
+        if (valueItem === option.value) {
+          selected = true
+        }
       })
 
-      if (value instanceof Array
-          && value.length === 0
-          && option.value === "") {
+      if (value instanceof Array && value.length === 0 && option.value === "") {
         // if no item is selected, then the first option (the empty item)
         // should be treated as selected
         selected = true
@@ -158,7 +168,7 @@ export class BaseMultiSelectInput extends React.Component {
         option.label,
         option.value,
         selected,
-        (e) => this.handleChange(e)
+        e => this.handleChange(e)
       )
       return item
     })
@@ -170,10 +180,11 @@ export class BaseMultiSelectInput extends React.Component {
     let value = this.getDisplayValue()
     return (
       <div>
-        <div onClick={() => this.handleClick()}>
-          {renderDisplay(value)}
-        </div>
-        <this.props.modal showModal={isActive} onClose={() => this.handleClose()}>
+        <div onClick={() => this.handleClick()}>{renderDisplay(value)}</div>
+        <this.props.modal
+          showModal={isActive}
+          onClose={() => this.handleClose()}
+        >
           {this.renderItems()}
         </this.props.modal>
       </div>

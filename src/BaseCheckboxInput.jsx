@@ -1,7 +1,7 @@
 import React from "react"
+import PropTypes from "prop-types"
 import Radium from "radium"
 import { Formfield } from "react-get-form-data"
-
 
 @Formfield
 @Radium
@@ -11,14 +11,14 @@ export class BaseCheckboxInput extends React.Component {
   // and passes in all necessary props.
   //
   static propTypes = {
-    name: React.PropTypes.string.isRequired,
-    valueInitial: React.PropTypes.any,
+    name: PropTypes.string.isRequired,
+    valueInitial: PropTypes.any,
   }
 
   constructor(props) {
     super(props)
     let value = this.getValue(props, props.valueInitial)
-    this.state = {value: value}
+    this.state = { value: value }
   }
 
   componentDidMount() {
@@ -31,7 +31,7 @@ export class BaseCheckboxInput extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.valueInitial !== nextProps.valueInitial) {
       let value = this.getValue(nextProps, nextProps.valueInitial)
-      this.setState({value: value})
+      this.setState({ value: value })
       let { formContext } = this.context
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", nextProps.name, value, false)
@@ -44,7 +44,9 @@ export class BaseCheckboxInput extends React.Component {
     // value through this function, first, so that the internal value is always
     // either `true` or `false`.
     //
-    if (value) { return true }
+    if (value) {
+      return true
+    }
     return false
   }
 
@@ -53,7 +55,9 @@ export class BaseCheckboxInput extends React.Component {
     // or `""`, instead, which controls the checked status of the checkbox.
     //
     let { value } = this.state
-    if (value === true) { return "checked" }
+    if (value === true) {
+      return "checked"
+    }
     return ""
   }
 
@@ -66,7 +70,7 @@ export class BaseCheckboxInput extends React.Component {
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", name, value, true)
     }
-    this.setState({value: value})
+    this.setState({ value: value })
   }
 
   render() {
@@ -74,7 +78,7 @@ export class BaseCheckboxInput extends React.Component {
     let valueDisplay = this.getDisplayValue()
     return (
       <input
-        onChange={(val) => this.handleChange(val)}
+        onChange={val => this.handleChange(val)}
         style={style}
         type="checkbox"
         checked={valueDisplay}

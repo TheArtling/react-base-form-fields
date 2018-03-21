@@ -1,7 +1,7 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { Formfield } from "react-get-form-data"
 import { TextInput } from "react-native"
-
 
 @Formfield
 export default class BaseTextInput extends React.Component {
@@ -15,9 +15,9 @@ export default class BaseTextInput extends React.Component {
   //
 
   static propTypes = {
-    name: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func,
-    valueInitial: React.PropTypes.any,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
+    valueInitial: PropTypes.any,
   }
 
   constructor(props) {
@@ -25,7 +25,7 @@ export default class BaseTextInput extends React.Component {
     // we save the initial value into the state.
     super(props)
     let value = this.getValue(props.type, props.valueInitial)
-    this.state = {value: value}
+    this.state = { value: value }
   }
 
   /* istanbul ignore next */
@@ -42,7 +42,9 @@ export default class BaseTextInput extends React.Component {
     let { formContext } = this.context
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", this.props.name, this.state.value, false)
-      if (this.props.onChange) { this.props.onChange(this.state.value) }
+      if (this.props.onChange) {
+        this.props.onChange(this.state.value)
+      }
     }
   }
 
@@ -63,13 +65,15 @@ export default class BaseTextInput extends React.Component {
     //
     if (this.props.valueInitial !== nextProps.valueInitial) {
       let value = this.getValue(nextProps.type, nextProps.valueInitial)
-      this.setState({value: value})
+      this.setState({ value: value })
       let { formContext } = this.context
 
       /* istanbul ignore next */
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", nextProps.name, value, false)
-        if (nextProps.onChange) { nextProps.onChange(value) }
+        if (nextProps.onChange) {
+          nextProps.onChange(value)
+        }
       }
     }
   }
@@ -77,15 +81,21 @@ export default class BaseTextInput extends React.Component {
   getValue(type, value) {
     // Helper function to "normalize" the value.
     // If this field is a number field, we want "" to be `null`, internally.
-    if (type === "number" && value === "") { value = null }
+    if (type === "number" && value === "") {
+      value = null
+    }
     return value
   }
 
   getDisplayValue(value) {
     // Whatever this field is, we never want to render `undefined` or `null`,
     // so for display purposes we set it to `""`
-    if (value === null) { return "" }
-    if (value === undefined) { return "" }
+    if (value === null) {
+      return ""
+    }
+    if (value === undefined) {
+      return ""
+    }
     return value
   }
 
@@ -95,13 +105,15 @@ export default class BaseTextInput extends React.Component {
     let { name, onChange } = this.props
     let { formContext } = this.context
     value = this.getValue(this.props.type, value)
-    this.setState({value: value})
+    this.setState({ value: value })
     /* istanbul ignore next */
     if (true) {
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", name, value, true)
       }
-      if (onChange) { onChange(value) }
+      if (onChange) {
+        onChange(value)
+      }
     }
   }
 
@@ -114,7 +126,7 @@ export default class BaseTextInput extends React.Component {
     let valueDisplay = this.getDisplayValue(this.state.value)
     return (
       <TextInput
-        onChangeText={(val) => this.handleChange(val)}
+        onChangeText={val => this.handleChange(val)}
         value={valueDisplay}
         {...other}
       />

@@ -1,7 +1,7 @@
 import React from "react"
+import PropTypes from "prop-types"
 import Radium from "radium"
 import { Formfield } from "react-get-form-data"
-
 
 @Formfield
 @Radium
@@ -16,17 +16,17 @@ export class BaseTextArea extends React.Component {
   //
 
   static propTypes = {
-    name: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
-    valueInitial: React.PropTypes.any,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
+    placeholder: PropTypes.string,
+    valueInitial: PropTypes.any,
   }
 
   constructor(props) {
     // See BaseTextInput for explanation.
     super(props)
     let value = props.valueInitial
-    this.state = {value: value}
+    this.state = { value: value }
   }
 
   componentDidMount() {
@@ -34,7 +34,9 @@ export class BaseTextArea extends React.Component {
     let { formContext } = this.context
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", this.props.name, this.state.value, false)
-      if (this.props.onChange) { this.props.onChange(this.state.value) }
+      if (this.props.onChange) {
+        this.props.onChange(this.state.value)
+      }
     }
   }
 
@@ -42,11 +44,13 @@ export class BaseTextArea extends React.Component {
     // See BaseTextInput for explanation.
     if (this.props.valueInitial !== nextProps.valueInitial) {
       let value = nextProps.valueInitial
-      this.setState({value: value})
+      this.setState({ value: value })
       let { formContext } = this.context
       if (formContext && formContext.handleChange) {
         formContext.handleChange("", nextProps.name, value, false)
-        if (nextProps.onChange) { nextProps.onChange(value) }
+        if (nextProps.onChange) {
+          nextProps.onChange(value)
+        }
       }
     }
   }
@@ -56,8 +60,12 @@ export class BaseTextArea extends React.Component {
     // so for display purposes we set it to `""`
     let { type } = this.props
     let { value } = this.state
-    if (value === null) { return "" }
-    if (value === undefined) { return "" }
+    if (value === null) {
+      return ""
+    }
+    if (value === undefined) {
+      return ""
+    }
     return value
   }
 
@@ -69,26 +77,32 @@ export class BaseTextArea extends React.Component {
     if (formContext && formContext.handleChange) {
       formContext.handleChange("", name, value, true)
     }
-    this.setState({value: value})
-    if (onChange) { onChange(value) }
+    this.setState({ value: value })
+    if (onChange) {
+      onChange(value)
+    }
   }
 
   render() {
     // See BaseTextInput for explanation.
     let { cols, rows, style, type, ...other } = this.props
     let valueDisplay = this.getDisplayValue()
-    if (!cols) { cols = "30" }
-    if (!rows) { rows = "10" }
+    if (!cols) {
+      cols = "30"
+    }
+    if (!rows) {
+      rows = "10"
+    }
     return (
       <textarea
         className="form-control"
         cols={cols}
-        onChange={(val) => this.handleChange(val)}
+        onChange={val => this.handleChange(val)}
         rows={rows}
         style={style}
         value={valueDisplay}
         {...other}
-      ></textarea>
+      />
     )
   }
 }
